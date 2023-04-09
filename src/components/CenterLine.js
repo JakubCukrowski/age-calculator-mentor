@@ -1,10 +1,12 @@
-import arrowIcon from "../assets/images/favicon-32x32.png"
-import styled from "styled-components"
+import arrowIcon from "../assets/images/icon-arrow.svg"
+import { StyledImg } from "../styles/ArrowIcon.style"
+import { StyledDiv } from "../styles/StyledDiv.style"
 
 export const CenterLine = () => {
     return (
-        <div>
+        <StyledDiv>
             <hr></hr>
-        </div>
+            <StyledImg src={arrowIcon}/>
+        </StyledDiv>
     )
 }
