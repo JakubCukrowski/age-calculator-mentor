@@ -4,20 +4,21 @@ import { StyledInput } from "../styles/Input.style";
 import { StyledLabel } from "../styles/Label.style";
 import { InputContainer } from "../styles/InputContainer.style";
 
-export const Form = () => {
+export const Form = ({handleInputs, errors}) => {
+
     return (
         <DateForm>
             <InputContainer>
-                <StyledLabel htmlFor="">DAY</StyledLabel>
-                <StyledInput type="number" />
+                <StyledLabel htmlFor="day">DAY</StyledLabel>
+                <StyledInput onChange={handleInputs} type="number" id="day" name="day"/>
             </InputContainer>
             <InputContainer>
-                <StyledLabel htmlFor="">MONTH</StyledLabel>
-                <StyledInput type="number" />
+                <StyledLabel htmlFor="month">MONTH</StyledLabel>
+                <StyledInput onChange={handleInputs} type="number" id="month" name="month"/>
             </InputContainer>
             <InputContainer>
-                <StyledLabel htmlFor="">YEAR</StyledLabel>
-                <StyledInput type="number" />
+                <StyledLabel htmlFor="year">YEAR</StyledLabel>
+                <StyledInput onChange={handleInputs} type="number" id="year" name="year"/>
             </InputContainer>
         </DateForm>
     )
