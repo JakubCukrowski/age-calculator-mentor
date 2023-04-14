@@ -6,4 +6,13 @@ export const StyledImg = styled.img`
     border-radius: 50%;
     padding: 10px;
     width: 50px;
+
+    &.clicked {
+        background-color: hsl(0, 0%, 8%);
+    }
+
+    @media (min-width: 600px) {
+        width: 70px;
+    }
+
 `

@@ -6,8 +6,11 @@ export const MainContainer = styled.div`
     margin-top: 4.5em;
     border-radius: 5%;
     border-bottom-right-radius: 30%;
+    font-family: 'Poppins', sans-serif;
 
     @media (min-width: 600px) {
-        margin-top: 0
+        margin-top: 0;
+        max-width: 600px;
+        padding: 40px;
     }
 `

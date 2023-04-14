@@ -3,36 +3,86 @@ import { StyledImg } from "../styles/ArrowIcon.style"
 import { StyledDiv } from "../styles/StyledDiv.style"
 import { Button } from "../styles/Button.style"
 
-export const CenterLine = ({inputFields, setResults}) => {
+export const CenterLine = ({
+    currentDate,
+    birthYear, 
+    birthMonth,
+    birthDay,
+    lastMonthDay, 
+    inputFields, 
+    setResults, 
+    isClicked, 
+    setIsClicked, 
+    setErrors}) => {
     const handleClick = () => {
-        const currentDate = new Date()
-        const providedDate = new Date(inputFields.year, inputFields.month - 1, inputFields.day)
-        const providedYear = providedDate.getFullYear()
-        const providedMonth = providedDate.getMonth() + 1
-        const providedDay = providedDate.getDate()
+        if (inputFields.year.length === 0 || inputFields.month === 0 || inputFields.day === 0) {
+            setErrors({
+                dayError: true,
+                monthError: true,
+                yearError: true
+            })
 
-        let month = 0
+        } else if (inputFields.day > lastMonthDay.getDate()){    
+            setErrors({
+                dayError: true,
+                monthError: true,
+                yearError: true
+            })
 
-        if (currentDate.getMonth() + 1 > providedMonth && providedDay < currentDate.getDate()) {
-            month = (currentDate.getMonth() + 1) - providedMonth
-        } else if (currentDate.getMonth() + 1 > providedMonth && providedDay > currentDate.getDate()) {
-            month = (currentDate.getMonth()) - providedMonth
-        } else if (currentDate.getMonth() + 1 < providedMonth && providedDay > currentDate.getDate()) {
-            month = providedMonth - (currentDate.getMonth() + 1)
-        } else if (currentDate.getMonth() + 1 < providedMonth && providedDay < currentDate.getDate()) {
-            month = (providedMonth - 1) - (currentDate.getMonth() + 1)
-        } else if (providedDay === currentDate.getDate() && currentDate.getMonth() + 1 < providedMonth) {
-            month = providedMonth - (currentDate.getMonth() + 1)
-        } else if (providedDay === currentDate.getDate() && currentDate.getMonth() + 1 > providedMonth) {
-            month = (currentDate.getMonth() + 1) - providedMonth
+        } else {
+
+        let monthsCount
+        let daysCount
+
+        if (currentDate.getMonth() + 1 === birthMonth && currentDate.getDate() === birthDay) {
+            monthsCount = currentDate.getMonth() + 1 - birthMonth
+            daysCount = 0
+        } 
+
+        if ((currentDate.getMonth() + 1 > birthMonth && currentDate.getDate() === birthDay)
+            || (currentDate.getMonth() + 1 === birthMonth && currentDate.getDate() > birthDay)
+            || (currentDate.getMonth() + 1 > birthMonth && currentDate.getDate() > birthDay)) {
+            monthsCount = currentDate.getMonth() + 1 - birthMonth
+            daysCount = currentDate.getDate() - birthDay
         }
-        
+
+        if (currentDate.getMonth() + 1 < birthMonth && currentDate.getDate() === birthDay) {
+            monthsCount = 12 + ((currentDate.getMonth() + 1) - birthMonth)
+            daysCount = currentDate.getDate() - birthDay
+        }
+
+        if ((currentDate.getMonth() + 1 === birthMonth && currentDate.getDate() < birthDay)
+            || (currentDate.getMonth() + 1 < birthMonth && currentDate.getDate() < birthDay)) {
+            monthsCount = 12 + currentDate.getMonth() - birthMonth
+            daysCount = lastMonthDay.getDate() + currentDate.getDate() - birthDay + 1
+        }
+
+        if (currentDate.getMonth() + 1 > birthMonth && currentDate.getDate() < birthDay) {
+            monthsCount = currentDate.getMonth() - birthMonth
+            daysCount = lastMonthDay.getDate() + currentDate.getDate() - birthDay + 1
+        }
+
+        if (currentDate.getMonth() + 1 < birthMonth && currentDate.getDate() > birthDay) {
+            monthsCount = 12 + currentDate.getMonth() + 1 - birthMonth
+            daysCount = currentDate.getDate() - birthDay
+        }
+    
         setResults({
-            years: currentDate.getFullYear() - providedYear,
-            months: month,
-
-
+            years: currentDate.getMonth() + 1 > birthMonth
+                || (currentDate.getMonth() + 1 === birthMonth && currentDate.getDate() >= birthDay)
+                ? currentDate.getFullYear() - birthYear
+                : currentDate.getFullYear() - birthYear - 1,
+            months: monthsCount,
+            days: daysCount
         })
+
+        setIsClicked(true)
+        setErrors({
+            dayError: false,
+            monthError: false,
+            yearError: false,
+        })
+        }
         
     }
 
@@ -40,7 +90,7 @@ export const CenterLine = ({inputFields, setResults}) => {
         <StyledDiv>
             <hr></hr>
             <Button onClick={handleClick}>
-                <StyledImg src={arrowIcon}/>
+                <StyledImg className={isClicked ? "clicked" : ''} src={arrowIcon}/>
             </Button>
         </StyledDiv>
     )

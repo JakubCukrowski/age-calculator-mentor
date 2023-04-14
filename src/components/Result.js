@@ -1,12 +1,5 @@
 import React from "react";
-import styled from "styled-components";
-
-const Text = styled.p`
-    font-family: "Poppins", sans-serif;
-    font-size: 58px;
-    font-style: italic;
-    font-weight: 800;
-`
+import { Text } from "../styles/Text.style";
 
 export const Result = ({results}) => {
     const spanColor = {
