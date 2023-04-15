@@ -5,8 +5,7 @@ import { StyledLabel } from "../styles/Label.style";
 import { InputContainer } from "../styles/InputContainer.style";
 import { ErrorText } from "../styles/Error.span.style";
 
-export const Form = ({handleInputs, errors, inputFields, lastMonthDay}) => {
-
+export const Form = ({handleInputs, errors, inputFields, lastMonthDay, currentDate}) => {
     return (
         <DateForm>
             <InputContainer>
@@ -19,7 +18,9 @@ export const Form = ({handleInputs, errors, inputFields, lastMonthDay}) => {
                 name="day" 
                 placeholder="DD"/>
                 {errors.dayError === true && inputFields.day.length === 0 ? <ErrorText>This field is required</ErrorText> : null}
-                {errors.dayError === true && inputFields.day.length === 0 ? <ErrorText>This field is required</ErrorText> : null}
+                {errors.dayError === true && inputFields.day > lastMonthDay.getDate()
+                ? <ErrorText>Must be a valid date</ErrorText> 
+                : null}
             </InputContainer>
             <InputContainer>
                 <StyledLabel htmlFor="month">MONTH</StyledLabel>
@@ -31,6 +32,7 @@ export const Form = ({handleInputs, errors, inputFields, lastMonthDay}) => {
                 name="month" 
                 placeholder="MM"/>
                 {errors.monthError === true && inputFields.month.length === 0 ? <ErrorText>This field is required</ErrorText> : null}
+                {errors.monthError === true && inputFields.month > 12 ? <ErrorText>Must be a valid month</ErrorText> : null}
             </InputContainer>
             <InputContainer>
                 <StyledLabel htmlFor="year">YEAR</StyledLabel>
@@ -42,6 +44,8 @@ export const Form = ({handleInputs, errors, inputFields, lastMonthDay}) => {
                 name="year" 
                 placeholder="YYYY"/>
                 {errors.yearError === true && inputFields.year.length === 0 ? <ErrorText>This field is required</ErrorText> : null}
+                {errors.yearError === true && inputFields.year > currentDate.getFullYear() 
+                ? <ErrorText>Must be in the past</ErrorText> : null}
             </InputContainer>
         </DateForm>
     )

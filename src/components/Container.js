@@ -30,7 +30,7 @@ export const Container = () => {
     const birthMonth = birthDate.getMonth() + 1
     const birthDay = birthDate.getDate()
     const oneDay = 1000 * 60 * 60 * 24
-    const nextMonth = new Date(currentDate.getFullYear(), birthMonth, 1)
+    const nextMonth = new Date(inputFields.year, inputFields.month , 1)
     const lastMonthDay = new Date(nextMonth.getTime() - oneDay)
 
     const handleInputs = (e) => {
@@ -42,13 +42,29 @@ export const Container = () => {
                 [name]: value
             }
         })
+
+        setErrors({
+            dayError: false,
+            monthError: false,
+            yearError: false
+        })
+
+        setIsClicked(false)
+
+        setResults({
+            days: "--",
+            months: "--",
+            years: "--"
+        })
     }
 
     return (
         <MainContainer>
             <Form 
             handleInputs={handleInputs} 
-            errors={errors} 
+            errors={errors}
+            currentDate={currentDate}
+            lastMonthDay={lastMonthDay} 
             inputFields={inputFields}/>
             <CenterLine
             currentDate={currentDate}
