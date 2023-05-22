@@ -21,6 +21,7 @@ export const Form = ({handleInputs, errors, inputFields, lastMonthDay, currentDa
                 {errors.dayError === true && inputFields.day > lastMonthDay.getDate()
                 ? <ErrorText>Must be a valid date</ErrorText> 
                 : null}
+                {errors.yearError === true && inputFields.day < 0 ? <ErrorText>Not valid</ErrorText> : null}
             </InputContainer>
             <InputContainer>
                 <StyledLabel htmlFor="month">MONTH</StyledLabel>
@@ -33,6 +34,7 @@ export const Form = ({handleInputs, errors, inputFields, lastMonthDay, currentDa
                 placeholder="MM"/>
                 {errors.monthError === true && inputFields.month.length === 0 ? <ErrorText>This field is required</ErrorText> : null}
                 {errors.monthError === true && inputFields.month > 12 ? <ErrorText>Must be a valid month</ErrorText> : null}
+                {errors.yearError === true && inputFields.month < 0 ? <ErrorText>Not valid</ErrorText> : null}
             </InputContainer>
             <InputContainer>
                 <StyledLabel htmlFor="year">YEAR</StyledLabel>
@@ -46,6 +48,7 @@ export const Form = ({handleInputs, errors, inputFields, lastMonthDay, currentDa
                 {errors.yearError === true && inputFields.year.length === 0 ? <ErrorText>This field is required</ErrorText> : null}
                 {errors.yearError === true && inputFields.year > currentDate.getFullYear() 
                 ? <ErrorText>Must be in the past</ErrorText> : null}
+                {errors.yearError === true && inputFields.year < 0 ? <ErrorText>Not valid</ErrorText> : null}
             </InputContainer>
         </DateForm>
     )

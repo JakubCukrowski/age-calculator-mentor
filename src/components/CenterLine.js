@@ -24,6 +24,9 @@ export const CenterLine = ({
 
         } else if ((inputFields.day > lastMonthDay.getDate())
         || inputFields.month > 12 
+        || inputFields.year < 0
+        || inputFields.day < 0
+        || inputFields.month < 0
         || inputFields.year > currentDate.getFullYear){    
             setErrors({
                 dayError: true,
